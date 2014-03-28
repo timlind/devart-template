@@ -1,5 +1,5 @@
-Insert a description to describe your update to document your creative process. The Commissioned Interactive Artists will be doing the same so you can reference their Project Posts.
+Interactive Beats on your screen
 
-![Example Image](../project_images/cover.jpg?raw=true "Example Image")
+Using google's polymer framework beats are represented as elements in the browser window.
 
-https://www.youtube.com/watch?v=30yGOxJJ2PQ
+![Project Screenshot](project_images/cover.png?raw=true "Cover Image")
