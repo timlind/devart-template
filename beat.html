@@ -1,0 +1,132 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<polymer-element name='audio-beat' attributes="url name rate color bordercolor spincolor">
+  <template>
+    <div class="audio-beat {{playState}}" title="{{name}}" on-click="{{toggle}}"></div>
+  </template>
+  <script>
+
+    var player = new Player();
+
+    function Player() {
+      window.AudioContext = window.AudioContext||window.webkitAudioContext;
+
+      this.context = new AudioContext();
+      this.sources = {};
+    };
+
+    Player.prototype.load = function(url, cb) {
+      var sources = this.sources;
+      var context = this.context;
+
+      // fetch
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.responseType = 'arraybuffer';
+
+      // decode
+      request.onload = function() {
+        context.decodeAudioData(request.response, function(buffer) {
+          console.log("Sound ("+url+") decoded at " + Date.now());
+          sources[url] = new Sound(context, buffer);
+
+          if (cb) cb();
+        }, function(e) {
+          debugger;
+        });
+      }
+
+      request.send();
+    };
+
+    Player.prototype.start = function(url) {
+      this.sources[url].play();
+    }
+
+    Player.prototype.pause = function(url) {
+      this.sources[url].pause();
+    };
+
+    Player.prototype.stop = function(url) {
+      this.sources[url].reset();
+    }
+
+    function Sound(context, buffer) {
+      this.context = context;
+      this.buffer = buffer;
+      this.offset = 0;
+      this.startTime = null;
+    }
+
+    Sound.prototype.play = function() {
+      this.source = this.context.createBufferSource();
+      this.source.buffer = this.buffer;
+      this.source.loop = true;
+      this.source.connect(this.context.destination);
+      this.startTime = new Date();
+      console.log("Starting sound at offset " + this.offset);
+      this.source.start(0, this.offset);
+    };
+
+    Sound.prototype.pause = function() {
+      this.offset = this.offset + ((new Date()).getTime() - this.startTime.getTime()) / 1000;
+      this.source.stop(0);
+    }
+
+    Sound.prototype.reset = function() {
+      this.offset = 0;
+      this.source.stop(0);
+    };
+
+    Polymer('audio-beat', {
+      color: 'aliceblue',
+      bordercolor: '#eee',
+      spincolor: '#249',
+      playState: 'loading',
+      ready: function() {
+        var self = this;
+
+        player.load(this.url, function() {
+          self.playState = 'paused';
+        });
+      },
+      toggle: function() {
+        if (this.playState === 'playing') this.pause(); else this.play();
+      },
+      play: function() {
+        if (this.playState === 'paused') {
+          this.playState = "playing";
+          player.start(this.url);
+        }
+      },
+      pause: function() {
+        if (this.playState === 'playing') {
+          this.playState = 'paused';
+          player.pause(this.url);
+        }
+      }
+    });
+  </script>
+  <style>
+  .audio-beat {
+    border: 3px solid aliceblue;
+    border-radius: 100px;
+    padding: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 100px;
+    height:100px;
+  }
+
+  .audio-beat {
+    background: aliceblue;
+  }
+  .audio-beat.loading {
+    background: white;
+    border: none;
+  }
+  .audio-beat.playing {
+    background: rgb(117, 191, 255);
+  }
+  </style>
+</polymer-element>
