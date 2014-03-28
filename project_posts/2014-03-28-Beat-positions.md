@@ -1,7 +1,5 @@
-Beats in space
+Beats you can beat
 
-Beat elements on the screen can be dragged around to position them.
+Click on a beat to start or stop.
 
-This is in preparation for synchronising the beats along the same timeline represented by the screen.
-
-![Project Screenshot](project_images/draggable-beats.png?raw=true "Cover Image")
+![Project Screenshot](project_images/playable-beats.png?raw=true "Cover Image")
