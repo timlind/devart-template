@@ -1,8 +1,13 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 
-<polymer-element name='audio-beat' attributes="url name rate color bordercolor spincolor">
+<polymer-element
+    name='audio-beat'
+    attributes="url name rate color bordercolor spincolor">
   <template>
-    <div class="audio-beat {{playState}}" title="{{name}}" on-click="{{toggle}}" style="width: {{size}}px; height: {{size}}px;"></div>
+    <div id="root"
+      class="audio-beat {{playState}}" title="{{name}}"
+      on-click="{{click}}"
+      style="width: {{size}}px; height: {{size}}px;"></div>
   </template>
   <script>
 
@@ -84,14 +89,17 @@
       bordercolor: '#eee',
       spincolor: '#249',
       playState: 'loading',
+      percentComplete: 0,
       ready: function() {
         var self = this;
-
         player.load(this.url, function(sound) {
           self.sound = sound;
           self.playState = 'paused';
           self.size = sound.buffer.duration * 3;
         });
+      },
+      attached: function() {
+        new Draggabilly(this);
       },
       toggle: function() {
         if (this.playState === 'playing') this.pause(); else this.play();
@@ -107,12 +115,15 @@
           this.playState = 'paused';
           player.pause(this.url);
         }
+      },
+      click: function() {
+        this.toggle();
       }
     });
   </script>
   <style>
   .audio-beat {
-    border: 3px solid aliceblue;
+    border: 1px solid rgb(117, 182, 239);
     border-radius: 100px;
     padding: 20px;
     vertical-align: middle;
@@ -132,6 +143,7 @@
   .audio-beat.playing {
     background: rgb(117, 191, 255);
   }
+
 
   </style>
 </polymer-element>
