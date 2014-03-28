@@ -2,7 +2,7 @@
 
 <polymer-element name='audio-beat' attributes="url name rate color bordercolor spincolor">
   <template>
-    <div class="audio-beat {{playState}}" title="{{name}}" on-click="{{toggle}}"></div>
+    <div class="audio-beat {{playState}}" title="{{name}}" on-click="{{toggle}}" style="width: {{size}}px; height: {{size}}px;"></div>
   </template>
   <script>
 
@@ -27,10 +27,10 @@
       // decode
       request.onload = function() {
         context.decodeAudioData(request.response, function(buffer) {
-          console.log("Sound ("+url+") decoded at " + Date.now());
+          console.log("Sound ("+url+") decoded: length(" + buffer.duration + "s)");
           sources[url] = new Sound(context, buffer);
 
-          if (cb) cb();
+          if (cb) cb(sources[url]);
         }, function(e) {
           debugger;
         });
@@ -79,6 +79,7 @@
     };
 
     Polymer('audio-beat', {
+      size: '10',
       color: 'aliceblue',
       bordercolor: '#eee',
       spincolor: '#249',
@@ -86,8 +87,10 @@
       ready: function() {
         var self = this;
 
-        player.load(this.url, function() {
+        player.load(this.url, function(sound) {
+          self.sound = sound;
           self.playState = 'paused';
+          self.size = sound.buffer.duration * 3;
         });
       },
       toggle: function() {
@@ -120,6 +123,7 @@
 
   .audio-beat {
     background: aliceblue;
+    -webkit-transition: width 2s ease-in, height 2s ease-in;
   }
   .audio-beat.loading {
     background: white;
@@ -128,5 +132,6 @@
   .audio-beat.playing {
     background: rgb(117, 191, 255);
   }
+
   </style>
 </polymer-element>
