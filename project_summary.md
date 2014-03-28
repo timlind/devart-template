@@ -1,33 +1,29 @@
-# Project Title
-Insert the name of your project
+# MusicCanvas
+
 
 ## Authors
-- Insert main author name, surname, github account
-- Insert other author(s) name, surname, github account (one per list element)
+- Tim, Lind, timlind
 
 ## Description
-Insert a description containing about 100 to 150 words, including your motivation and the meaning behind your idea and execution. The Judges will be keen to know how your idea pushes the boundaries of code and technology. 
+Music Canvas provides a new conceptualisation of how music is composed, showing the song as a canvas of how the beats are composed together.
 
 ## Link to Prototype
-NOTE: If your project lives online you can add one or more links here. Make sure you have a stable version of your project running before linking it.
 
-[Example Link](http://www.google.com "Example Link")
+[Demo the Music Canvas](http://incremental.co/music-canvas "Demo the Music Canvas")
 
 ## Example Code
-NOTE: Wrap your code blocks or any code citation by using ``` like the example below.
-```
-function test() {
-  console.log("Printing a test");
-}
-```
-## Links to External Libraries
- NOTE: You can also use this space to link to external libraries or Github repositories you used on your project.
+This app is built with Google new Polymer framework, which encourages creation of custom HTML elements.
+The HTML 5 WebAudio API has been used for all playback.
 
-[Example Link](http://www.google.com "Example Link")
+```
+<audio-beat url=""></audio-beat>
+```
+
+## Links to External Libraries
+Polymer
+
+[Polymer](http://http://www.polymer-project.org/ "Polymer")
 
 ## Images & Videos
-NOTE: For additional images you can either use a relative link to an image on this repo or an absolute link to an externally hosted image.
 
-![Example Image](project_images/cover.jpg?raw=true "Example Image")
-
-https://www.youtube.com/watch?v=30yGOxJJ2PQ
+![Project Screenshot](project_images/cover.png?raw=true "Cover Image")
