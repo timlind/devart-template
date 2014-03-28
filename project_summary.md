@@ -9,7 +9,7 @@ Music Canvas provides a new conceptualisation of how music is composed, showing 
 
 ## Link to Prototype
 
-[Demo the Music Canvas](http://incremental.co/music-canvas "Demo the Music Canvas")
+[Demo the Music Canvas](index.html "Demo the Music Canvas")
 
 ## Example Code
 This app is built with Google new Polymer framework, which encourages creation of custom HTML elements.
